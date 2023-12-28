@@ -1,0 +1,45 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on:
+  push:
+    branches: [ "Production" ]
+  pull_request:
+    branches: [ "Production" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      DB_NAME: ${{ SECRETS.DB_NAME }}
+      APP_SETTINGS: ${{ SECRETS.APP_SETTINGS }}
+      APP_TESTING_SETTINGS: ${{ SECRETS.APP_TESTING_SETTINGS }}
+      SECRET_KEY: ${{ SECRETS.SECRET_KEY }}
+      UPLOAD_FOLDER: ${{ SECRETS.UPLOAD_FOLDER }}
+      SECURITY_PASSWORD_SALT: ${{ SECRETS.SECURITY_PASSWORD_SALT }}
+      APP_MAIL_DEFAULT_SENDER: ${{ SECRETS.APP_MAIL_DEFAULT_SENDER }}
+      APP_MAIL_USERNAME: ${{ SECRETS.APP_MAIL_USERNAME }}
+      APP_MAIL_PASSWORD: ${{ SECRETS.APP_MAIL_PASSWORD }}
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python3.11 -m venv venv
+        . venv/bin/activate
+        python -m pip install --upgrade pip setuptools wheel
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: inner air - running tests
+      run: |
+        ./venv/bin/pytest tests
