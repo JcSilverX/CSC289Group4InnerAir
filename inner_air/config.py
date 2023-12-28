@@ -1,9 +1,9 @@
 from decouple import config
 
 DB_NAME = config('DB_NAME')
-HOST = config('HOST')
-USR = config('USR')
-PASSWD = config('PASSWD')
+# HOST = config('HOST')
+# USR = config('USR')
+# PASSWD = config('PASSWD')
 
 
 class Config(object):
@@ -23,9 +23,9 @@ class Config(object):
     """
         MYSQL SETTINGS
     """
-    HOST = config('HOST')
-    USR = config('USR')
-    PASSWD = config('PASSWD')
+    # HOST = config('HOST')
+    # USR = config('USR')
+    # PASSWD = config('PASSWD')
 
     """
         mail settings.
