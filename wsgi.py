@@ -11,6 +11,7 @@ from inner_air.utils.decorators import def_params
 
 cli = FlaskGroup(app)
 
+
 """
     admin settings
     
